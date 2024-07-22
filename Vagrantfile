@@ -1,5 +1,5 @@
 Vagrant.configure("2") do |config|
-  (1..3).each do |i|
+  (1..1).each do |i|
     config.vm.define "k8s-node#{i}" do |done|
 
       config.vm.hostname = "k8s-node#{i}"
@@ -8,7 +8,7 @@ Vagrant.configure("2") do |config|
       config.ssh.password = "vagrant";
       config.ssh.insert_key = true;
 
-      config.vm.box = "acejilam/ubuntu22.04"
+  config.vm.box = "gusztavvargadr/kitchen-ubuntu-2204"
 
       # Disable automatic box update checking. If you disable this, then
       # boxes will only be checked for updates when the user runs
@@ -40,7 +40,7 @@ Vagrant.configure("2") do |config|
         apt clean all
         apt-get update -y
         apt-get install -y apache2
-        apt-get install -y make clang llvm libelf-dev libbpf-dev bpfcc-tools libbpfcc-dev linux-tools-$(uname -r) linux-headers-$(uname -r)
+        apt-get install -y make clang llvm libelf-dev libbpf-dev bpfcc-tools libbpfcc-dev linux-tools-generic linux-headers-$(uname -r) bcc-tools
       SHELL
     end
   end
