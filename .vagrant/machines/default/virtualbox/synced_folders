@@ -1,0 +1,1 @@
+{"virtualbox":{"/vagrant_data":{"guestpath":"/vagrant_data","hostpath":"/Users/acejilam/Desktop/ebpf_study/data","disabled":false,"__vagrantfile":true},"/etc/apt":{"guestpath":"/etc/apt","hostpath":"/Users/acejilam/Desktop/ebpf_study/repo","disabled":false,"__vagrantfile":true}}}
