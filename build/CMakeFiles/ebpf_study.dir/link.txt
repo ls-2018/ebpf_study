@@ -1,1 +1,0 @@
-/usr/local/opt/llvm/bin/clang -g -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -Wl,-search_paths_first -Wl,-headerpad_max_install_names -L/usr/local/opt/llvm/lib CMakeFiles/ebpf_study.dir/main.c.o -o ebpf_study 

@@ -1,4 +1,7 @@
 SortIncludes: Never
+SpacesInLineCommentPrefix:
+  Minimum: 0
+  Maximum: 1
 IndentPPDirectives: AfterHash
 #基础样式
 BasedOnStyle: Google

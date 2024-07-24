@@ -1,5 +1,7 @@
-#include "vmlinux.h"
+#include <linux/bpf.h>
 #include <bpf/bpf_helpers.h>
+#include <linux/if_ether.h>
+#include <linux/ip.h>
 
 SEC("xdp")
 int my_pass(struct xdp_md *ctx) {
