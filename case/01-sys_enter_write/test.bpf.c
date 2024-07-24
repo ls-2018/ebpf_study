@@ -1,6 +1,5 @@
 #include <linux/bpf.h> // 要在前边
 #include <bpf/bpf_helpers.h>
-// #include <bpf/bpf_tracing.h>
 
 typedef unsigned long long pid_t;
 
@@ -12,4 +11,7 @@ int handle_tp(void *ctx) {
     bpf_printk("bpf triggered from pid %d.\n", pid);
     return 0;
 }
-// cat /proc/kallsyms
+
+// [root@aps04 ~]# perf list tracepoint |grep sys_enter_write
+//  syscalls:sys_enter_write                           [Tracepoint event]
+//  syscalls:sys_enter_writev                          [Tracepoint event]

@@ -1,0 +1,4 @@
+/Users/acejilam/Desktop/ebpf_study/build/CMakeFiles/test.dir
+/Users/acejilam/Desktop/ebpf_study/build/CMakeFiles/ebpf_study.dir
+/Users/acejilam/Desktop/ebpf_study/build/CMakeFiles/edit_cache.dir
+/Users/acejilam/Desktop/ebpf_study/build/CMakeFiles/rebuild_cache.dir

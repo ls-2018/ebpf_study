@@ -34,7 +34,6 @@ EOF
 function install_dep(){
 
   echo -e 'root\nroot\n'|passwd root
-  echo 'nameserver 114.114.114.114' > /etc/resolv.conf
   apt clean all
   apt-get update -y
   apt-get install -y apache2
@@ -103,6 +102,6 @@ function prepare_ebpf() {
 }
 
 init_repo
-install_dep
+# install_dep
 install_go
 install_python

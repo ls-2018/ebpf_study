@@ -78,5 +78,6 @@ fabric.properties
 .idea/caches/build_file_checksums.ser
 .idea
 
-./case/**/**.json
-./case/**/**.bpf.o
+./case/**/package.json
+./case/**/test.bpf.o
+./case/**/test.skel.json

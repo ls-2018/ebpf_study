@@ -1,0 +1,2 @@
+/usr/bin/ar qc libtest.a "CMakeFiles/test.dir/case/01-sys_enter_write/test.bpf.c.o" "CMakeFiles/test.dir/case/02-kprobe/test.bpf.c.o" "CMakeFiles/test.dir/case/03-xdp/test.bpf.c.o"
+/usr/local/opt/llvm/bin/llvm-ranlib libtest.a
