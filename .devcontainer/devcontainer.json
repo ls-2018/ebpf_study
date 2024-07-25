@@ -3,7 +3,7 @@
 {
   "name": "Go",
   "build": {
-    "context": "",
+    "context": "..",
     "dockerfile": "../Dockerfile"
   },
   // Configure tool-specific properties.

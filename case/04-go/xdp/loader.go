@@ -14,6 +14,8 @@ import (
 type Ip struct {
 	Sip uint32
 	Dip uint32
+	SPort uint16
+	DPort uint16
 }
 
 func Load() {

@@ -1,12 +1,17 @@
 //go:build ignore
+
 #include <linux/bpf.h>
-#include <bpf/bpf_helpers.h>
 #include <linux/if_ether.h>
 #include <linux/ip.h>
+#include <linux/tcp.h>
+#include <bpf/bpf_helpers.h>
+#include <bpf/bpf_endian.h>
 
 struct ip_data {
     __u32 sip;
     __u32 dip;
+    __be16 sport;
+    __be16 dport;
 };
 
 char LICENSE[] SEC("license") = "Dual BSD/GPL";
@@ -33,14 +38,25 @@ int my_pass(struct xdp_md *ctx) {
         bpf_printk("invalid ip header\n");
         return XDP_DROP;
     }
+    struct tcphdr *tcp = _data + sizeof(*tcp);
+    if ((void *)tcp + sizeof(*tcp) > data_end) {
+        bpf_printk("invalid tcp header\n");
+        return XDP_DROP;
+    }
+
+    if (ip->protocol != 6) { // 不是 TCP 跳过
+        return XDP_PASS;
+    }
 
     struct ip_data *data = NULL;
 
     data = bpf_ringbuf_reserve(&ip_map, sizeof(struct ip_data), 0); // 环形缓冲区获取一块内存
 
     if (data) {
-        data->sip = ip->saddr;
-        data->dip = ip->daddr;
+        data->sip = bpf_ntohl(ip->saddr); // 网络字节序 转 主机字节序  32位  大小端
+        data->dip = bpf_ntohl(ip->daddr);
+        data->sport = bpf_ntohs(tcp->source);
+        data->dport = bpf_ntohs(tcp->dest);
         bpf_ringbuf_submit(data, 0);
     }
     // unsigned int src_ip = ip->saddr;
@@ -62,3 +78,5 @@ int my_pass(struct xdp_md *ctx) {
 
 // ip link set dev docker0 xdp obj xdp_bpfeb.o sec xdp verbose
 // ip link set dev docker0 xdp off
+
+// 启动两个容器，分别从宿主机 和另一个容器访问 
