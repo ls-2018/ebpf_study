@@ -1,7 +1,6 @@
 //go:build ignore
-
-#include <bpf/bpf_helpers.h>
 #include <linux/bpf.h>
+#include <bpf/bpf_helpers.h>
 #include <linux/limits.h>
 
 typedef unsigned long long pid_t;

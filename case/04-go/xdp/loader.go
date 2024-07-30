@@ -1,7 +1,9 @@
 package xdp
 
 import (
+	"encoding/binary"
 	"errors"
+	"github.com/cilium/ebpf"
 	"github.com/cilium/ebpf/link"
 	"github.com/cilium/ebpf/perf"
 	"github.com/cilium/ebpf/ringbuf"
@@ -12,18 +14,20 @@ import (
 )
 
 type Ip struct {
-	Sip uint32
-	Dip uint32
+	Sip   uint32
+	Dip   uint32
 	SPort uint16
 	DPort uint16
 }
-func initAllowIpMap (m *ebpf.Map ){
-ip :=binary.BigEndian.Uint32( net.ParseIP("172.20.1.2").To4())
-err:=m.Put(ip,uint8(1)
+
+func initAllowIpMap(m *ebpf.Map) {
+	ip := binary.BigEndian.Uint32(net.ParseIP("172.20.1.2").To4())
+	err := m.Put(ip, uint8(1))
 	if err != nil {
 		log.Fatalln(err)
 	}
 }
+
 func Load() {
 	xdpObj := xdpObjects{}
 
@@ -49,6 +53,7 @@ func Load() {
 	}
 	defer l.Close()
 
+	initAllowIpMap(xdpObj.IpMap)
 	reader, err := ringbuf.NewReader(xdpObj.IpMap)
 	if err != nil {
 		log.Fatalln(err)

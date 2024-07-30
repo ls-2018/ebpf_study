@@ -11,7 +11,3 @@ int handle_tp(void *ctx) {
     bpf_printk("bpf triggered from pid %d.\n", pid);
     return 0;
 }
-
-// [root@aps04 ~]# perf list tracepoint |grep sys_enter_write
-//  syscalls:sys_enter_write                           [Tracepoint event]
-//  syscalls:sys_enter_writev                          [Tracepoint event]
