@@ -14,6 +14,13 @@ struct ip_data {
     __be16 dport;
 };
 
+struct bpf_map_def SEC("maps") allow_ip_maps = {
+    .type = BPF_MAP_TYPE_HASH,
+    .key_size = sizeof(__u32),
+    .value_size = sizeof(__u8),
+    .max_entries = 1024,
+};
+
 char LICENSE[] SEC("license") = "Dual BSD/GPL";
 
 struct {
@@ -59,6 +66,13 @@ int my_pass(struct xdp_md *ctx) {
         data->dport = bpf_ntohs(tcp->dest);
         bpf_ringbuf_submit(data, 0);
     }
+    __u32 sip = bpf_ntohl(ip->saddr);
+    __u8 *allow = bpf_map_lookup_elem(&allow_ip_maps, &sip);
+
+    if (allow && *allow == 1) {
+        return XDP_PASS;
+    }
+
     // unsigned int src_ip = ip->saddr;
     // unsigned char bytes[4];
     // bytes[0] = (src_ip >> 0) & 0xFF;
@@ -67,7 +81,7 @@ int my_pass(struct xdp_md *ctx) {
     // bytes[3] = (src_ip >> 24) & 0xFF;
     //
     // bpf_printk("packet size is %d, protocol is %d, ip is %d.%d.%d.%d\n", pkt_sz, ip->protocol, bytes[0], bytes[1], bytes[2], bytes[3]);
-    return XDP_PASS;
+    return XDP_DROP;
 }
 
 // XDP_DROP 丢弃网络包--常用DDos防范
@@ -79,4 +93,4 @@ int my_pass(struct xdp_md *ctx) {
 // ip link set dev docker0 xdp obj xdp_bpfeb.o sec xdp verbose
 // ip link set dev docker0 xdp off
 
-// 启动两个容器，分别从宿主机 和另一个容器访问 
+// 启动两个容器，分别从宿主机 和另一个容器访问

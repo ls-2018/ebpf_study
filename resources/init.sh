@@ -4,6 +4,13 @@ touch ~/.hushlogin
 
 ARCH=$(arch | sed s/aarch64/arm64/ | sed s/x86_64/amd64/)
 
+function install_python() {
+	apt install python3-pip -y
+	pip3 config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
+	pip3 install bcc pytest
+	ln -s /usr/bin/python3 /usr/bin/python
+}
+
 function init_repo() {
 	if [ "$ARCH" == "amd64" ]; then
 		cat >/etc/apt/sources.list <<EOF
@@ -28,13 +35,15 @@ deb http://repo.huaweicloud.com/ubuntu-ports/ jammy-updates main restricted univ
 deb http://repo.huaweicloud.com/ubuntu-ports/ jammy-backports main restricted universe multiverse
 EOF
 	fi
-
+	echo 'nameserver 114.114.114.114' >/etc/resolv.conf
+	echo -e 'root\nroot\n' | passwd root
+	apt clean all
+	apt clean all
+	apt clean all
+	apt-get update -y
 }
 
 function install_bcc() {
-	echo -e 'root\nroot\n' | passwd root
-	apt clean all
-	apt-get update -y
 
 	cat <<EOF >>/etc/profile
 export PATH=\$PATH:/usr/share/bcc/tools:/usr/lib/llvm-14/bin
@@ -42,7 +51,8 @@ EOF
 	source /etc/profile
 
 	# 二进制包
-	apt-get install -y make clang llvm libelf-dev libbpf-dev bpfcc-tools libbpfcc-dev bcc-tools bpfcc-tools linux-headers-$(uname -r)
+	apt-get install -y make clang llvm libelf-dev libbpf-dev bpfcc-tools libbpfcc-dev bpfcc-tools linux-headers-$(uname -r)
+	# 有一个安装成功就行
 	apt-get install -y linux-tools-$(uname -r)
 	apt-get install -y linux-tools-generic
 
@@ -51,6 +61,7 @@ EOF
 	#    libllvm14 llvm-14-dev libclang-14-dev python3 zlib1g-dev libelf-dev libfl-dev python3-setuptools \
 	#    liblzma-dev libdebuginfod-dev arping netperf iperf
 	# export https_proxy=http://192.168.31.50:7890 http_proxy=http://192.168.31.50:7890 all_proxy=socks5://192.168.31.50:7890
+	# export https_proxy=http://10.230.205.190:7890 http_proxy=http://10.230.205.190:7890 all_proxy=socks5://10.230.205.190:7890
 	# git clone https://github.com/iovisor/bcc.git
 	# mkdir bcc/build; cd bcc/build
 	# cmake ..
@@ -75,8 +86,13 @@ EOF
 	#	make install
 	#	unset https_proxy && unset http_proxy && unset all_proxy
 
-	ln -s /usr/bin/python3 /usr/bin/python
-	ln -s /usr/include/asm-generic /usr/include/asm
+	if [ "$ARCH" == "amd64" ]; then
+		ln -s /usr/include/x86_64-linux-gnu/asm /usr/include/asm
+	fi
+	if [ "$ARCH" == "arm64" ]; then
+		ln -s /usr/include/aarch64-linux-gnu/asm /usr/include/asm
+	fi
+
 }
 
 function install_go() {
@@ -111,12 +127,6 @@ EOF
 
 }
 
-function install_python() {
-	apt install python3-pip -y
-	pip3 config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
-	pip3 install bcc pytest
-}
-
 function install_clang() {
 	# https://zhuanlan.zhihu.com/p/592334845
 
@@ -142,6 +152,6 @@ function prepare_ebpf() {
 }
 
 init_repo
+install_python
 install_bcc
 install_go
-install_python

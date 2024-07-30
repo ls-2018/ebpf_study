@@ -17,7 +17,13 @@ type Ip struct {
 	SPort uint16
 	DPort uint16
 }
-
+func initAllowIpMap (m *ebpf.Map ){
+ip :=binary.BigEndian.Uint32( net.ParseIP("172.20.1.2").To4())
+err:=m.Put(ip,uint8(1)
+	if err != nil {
+		log.Fatalln(err)
+	}
+}
 func Load() {
 	xdpObj := xdpObjects{}
 

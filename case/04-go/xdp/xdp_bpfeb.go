@@ -60,7 +60,8 @@ type xdpProgramSpecs struct {
 //
 // It can be passed ebpf.CollectionSpec.Assign.
 type xdpMapSpecs struct {
-	IpMap *ebpf.MapSpec `ebpf:"ip_map"`
+	AllowIpMaps *ebpf.MapSpec `ebpf:"allow_ip_maps"`
+	IpMap       *ebpf.MapSpec `ebpf:"ip_map"`
 }
 
 // xdpObjects contains all objects after they have been loaded into the kernel.
@@ -82,11 +83,13 @@ func (o *xdpObjects) Close() error {
 //
 // It can be passed to loadXdpObjects or ebpf.CollectionSpec.LoadAndAssign.
 type xdpMaps struct {
-	IpMap *ebpf.Map `ebpf:"ip_map"`
+	AllowIpMaps *ebpf.Map `ebpf:"allow_ip_maps"`
+	IpMap       *ebpf.Map `ebpf:"ip_map"`
 }
 
 func (m *xdpMaps) Close() error {
 	return _XdpClose(
+		m.AllowIpMaps,
 		m.IpMap,
 	)
 }

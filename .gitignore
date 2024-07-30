@@ -81,3 +81,5 @@ fabric.properties
 ./case/**/package.json
 ./case/**/test.bpf.o
 ./case/**/test.skel.json
+.DS_Store
+vendor
