@@ -29,6 +29,7 @@ struct {
 
 SEC("xdp")
 int my_pass(struct xdp_md *ctx) {
+
     void *_data = (void *)(long)ctx->data;
     void *data_end = (void *)(long)ctx->data_end;
     // int pkt_sz = data_end - _data;
@@ -61,7 +62,7 @@ int my_pass(struct xdp_md *ctx) {
     if (data) {
         data->sip = bpf_ntohl(ip->saddr); // 网络字节序 转 主机字节序  32位  大小端
         data->dip = bpf_ntohl(ip->daddr);
-        data->sport = bpf_ntohs(tcp->source);
+        data->sport = bpf_ntohs(tcp->source); // 16位
         data->dport = bpf_ntohs(tcp->dest);
         bpf_ringbuf_submit(data, 0);
     }
