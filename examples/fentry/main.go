@@ -1,7 +1,5 @@
-// This program demonstrates attaching a fentry eBPF program to
-// tcp_connect. It prints the command/IPs/ports information
-// once the host sent a TCP SYN packet to a destination.
-// It supports IPv4 at this example.
+//这个程序演示了将一个fentry eBPF程序连接到tcp_connect。一旦主机将TCP SYN包发送到目的地，它将打印命令/ ip /端口信息。
+//本例支持IPv4。
 //
 // Sample output:
 //
@@ -27,8 +25,9 @@ import (
 	"github.com/cilium/ebpf/ringbuf"
 	"github.com/cilium/ebpf/rlimit"
 )
+
 //go:generate go install github.com/cilium/ebpf/cmd/bpf2go@latest
-//go:generate bpf2go -type event bpf fentry.c -- -I../../include
+//go:generate bpf2go -type event bpf fentry.c -- -I $BPF_HEADERS -I $ASM_HEADERS
 
 func main() {
 	stopper := make(chan os.Signal, 1)

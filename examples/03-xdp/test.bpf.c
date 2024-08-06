@@ -1,7 +1,8 @@
-#include <bpf/bpf_helpers.h>
 #include <linux/bpf.h>
 #include <linux/if_ether.h>
 #include <linux/ip.h>
+
+#include "bpf_helpers.h"
 
 SEC("xdp")
 int my_pass(struct xdp_md *ctx) {

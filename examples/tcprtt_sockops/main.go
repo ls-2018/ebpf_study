@@ -38,8 +38,9 @@ import (
 
 	"golang.org/x/sys/unix"
 )
+
 //go:generate go install github.com/cilium/ebpf/cmd/bpf2go@latest
-//go:generate bpf2go -tags "linux" -type rtt_event bpf tcprtt_sockops.c -- -I../../include
+//go:generate bpf2go -tags "linux" -type rtt_event bpf tcprtt_sockops.c -- -I $BPF_HEADERS -I $ASM_HEADERS
 
 func main() {
 	stopper := make(chan os.Signal, 1)

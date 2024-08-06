@@ -1,10 +1,11 @@
 //go:build ignore
 #include <linux/bpf.h>
-#include <bpf/bpf_endian.h>
-#include <bpf/bpf_helpers.h>
 #include <linux/if_ether.h>
 #include <linux/ip.h>
 #include <linux/tcp.h>
+
+#include "bpf_endian.h"
+#include "bpf_helpers.h"
 
 struct ip_data {
     __u32 sip;
@@ -29,7 +30,6 @@ struct {
 
 SEC("xdp")
 int my_pass(struct xdp_md *ctx) {
-
     void *_data = (void *)(long)ctx->data;
     void *data_end = (void *)(long)ctx->data_end;
     // int pkt_sz = data_end - _data;

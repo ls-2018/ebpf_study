@@ -14,8 +14,9 @@ import (
 	"github.com/cilium/ebpf/rlimit"
 	"golang.org/x/sys/unix"
 )
+
 //go:generate go install github.com/cilium/ebpf/cmd/bpf2go@latest
-//go:generate bpf2go -type event bpf ringbuffer.c -- -I../../include
+//go:generate bpf2go -type event bpf ringbuffer.c -- -I $BPF_HEADERS -I $ASM_HEADERS
 
 func main() {
 	// Name of the kernel function to trace.

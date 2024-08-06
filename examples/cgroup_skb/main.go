@@ -2,6 +2,9 @@
 // The eBPF program will be attached as an egress filter,
 // receiving an `__sk_buff` pointer for each outgoing packet.
 // It prints the count of total packets every second.
+// 这个程序演示了将eBPF程序附加到一个控制组。
+// eBPF程序将作为egress过滤器附加，接收每个传出数据包的' __sk_buff '指针。
+// 每秒输出总包数。
 package main
 
 import (
@@ -16,8 +19,9 @@ import (
 	"github.com/cilium/ebpf/link"
 	"github.com/cilium/ebpf/rlimit"
 )
+
 //go:generate go install github.com/cilium/ebpf/cmd/bpf2go@latest
-//go:generate bpf2go bpf cgroup_skb.c -- -I../../include
+//go:generate bpf2go bpf cgroup_skb.c -- -I $BPF_HEADERS -I $ASM_HEADERS
 
 func main() {
 	// Allow the current process to lock memory for eBPF resources.

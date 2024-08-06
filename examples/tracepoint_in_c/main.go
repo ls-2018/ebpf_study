@@ -11,8 +11,9 @@ import (
 	"github.com/cilium/ebpf/link"
 	"github.com/cilium/ebpf/rlimit"
 )
+
 //go:generate go install github.com/cilium/ebpf/cmd/bpf2go@latest
-//go:generate bpf2go bpf tracepoint.c -- -I../../include
+//go:generate bpf2go bpf tracepoint.c -- -I $BPF_HEADERS -I $ASM_HEADERS
 
 const mapKey uint32 = 0
 

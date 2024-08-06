@@ -28,8 +28,9 @@ import (
 	"github.com/cilium/ebpf/ringbuf"
 	"github.com/cilium/ebpf/rlimit"
 )
+
 //go:generate go install github.com/cilium/ebpf/cmd/bpf2go@latest
-//go:generate bpf2go -type event bpf tcprtt.c -- -I../../include
+//go:generate bpf2go -type event bpf tcprtt.c -- -I $BPF_HEADERS -I $ASM_HEADERS
 
 func main() {
 	stopper := make(chan os.Signal, 1)

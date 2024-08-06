@@ -20,8 +20,9 @@ import (
 	"github.com/cilium/ebpf"
 	"github.com/cilium/ebpf/link"
 )
+
 //go:generate go install github.com/cilium/ebpf/cmd/bpf2go@latest
-//go:generate bpf2go bpf xdp.c -- -I../../include
+//go:generate bpf2go bpf xdp.c -- -I $BPF_HEADERS -I $ASM_HEADERS
 
 func main() {
 	if len(os.Args) < 2 {

@@ -20,8 +20,9 @@ import (
 	"github.com/cilium/ebpf/rlimit"
 	"golang.org/x/sys/unix"
 )
+
 //go:generate go install github.com/cilium/ebpf/cmd/bpf2go@latest
-//go:generate bpf2go -target amd64 -type event bpf uretprobe.c -- -I../../include
+//go:generate bpf2go -target amd64 -type event bpf uretprobe.c -- -I $BPF_HEADERS -I $ASM_HEADERS
 
 const (
 	// The path to the ELF binary containing the function to trace.
