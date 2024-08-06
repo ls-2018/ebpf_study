@@ -75,8 +75,9 @@ static inline void bpf_sock_ops_establish_cb(struct bpf_sock_ops *skops, u8 sock
         return;
     }
 
-    // Enable sockops callbacks for RTT and TCP state change
-    bpf_sock_ops_cb_flags_set(skops, BPF_SOCK_OPS_RTT_CB_FLAG | BPF_SOCK_OPS_STATE_CB_FLAG);
+	// Enable sockops callbacks for RTT and TCP state change
+// 为RTT和TCP状态更改 启用sockops回调
+	bpf_sock_ops_cb_flags_set(skops, BPF_SOCK_OPS_RTT_CB_FLAG | BPF_SOCK_OPS_STATE_CB_FLAG);
 }
 
 static inline void bpf_sock_ops_rtt_cb(struct bpf_sock_ops *skops) {

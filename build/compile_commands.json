@@ -1,0 +1,44 @@
+[
+{
+  "directory": "/Users/acejilam/Desktop/ebpf_study/build",
+  "command": "/usr/local/opt/llvm/bin/clang -I/media/psf/ebpf_study/include -I/usr/local/src/workspace/include -I/usr/include/aarch64-linux-gnu -g -std=gnu11 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -o CMakeFiles/test.dir/case/01-sys_enter_write/test.bpf.c.o -c /Users/acejilam/Desktop/ebpf_study/case/01-sys_enter_write/test.bpf.c",
+  "file": "/Users/acejilam/Desktop/ebpf_study/case/01-sys_enter_write/test.bpf.c",
+  "output": "CMakeFiles/test.dir/case/01-sys_enter_write/test.bpf.c.o"
+},
+{
+  "directory": "/Users/acejilam/Desktop/ebpf_study/build",
+  "command": "/usr/local/opt/llvm/bin/clang -I/media/psf/ebpf_study/include -I/usr/local/src/workspace/include -I/usr/include/aarch64-linux-gnu -g -std=gnu11 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -o CMakeFiles/test.dir/case/02-kprobe/test.bpf.c.o -c /Users/acejilam/Desktop/ebpf_study/case/02-kprobe/test.bpf.c",
+  "file": "/Users/acejilam/Desktop/ebpf_study/case/02-kprobe/test.bpf.c",
+  "output": "CMakeFiles/test.dir/case/02-kprobe/test.bpf.c.o"
+},
+{
+  "directory": "/Users/acejilam/Desktop/ebpf_study/build",
+  "command": "/usr/local/opt/llvm/bin/clang -I/media/psf/ebpf_study/include -I/usr/local/src/workspace/include -I/usr/include/aarch64-linux-gnu -g -std=gnu11 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -o CMakeFiles/test.dir/case/03-xdp/test.bpf.c.o -c /Users/acejilam/Desktop/ebpf_study/case/03-xdp/test.bpf.c",
+  "file": "/Users/acejilam/Desktop/ebpf_study/case/03-xdp/test.bpf.c",
+  "output": "CMakeFiles/test.dir/case/03-xdp/test.bpf.c.o"
+},
+{
+  "directory": "/Users/acejilam/Desktop/ebpf_study/build",
+  "command": "/usr/local/opt/llvm/bin/clang -I/media/psf/ebpf_study/include -I/usr/local/src/workspace/include -I/usr/include/aarch64-linux-gnu -g -std=gnu11 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -o CMakeFiles/test.dir/case/04-go/tc/tc_write.bpf.c.o -c /Users/acejilam/Desktop/ebpf_study/case/04-go/tc/tc_write.bpf.c",
+  "file": "/Users/acejilam/Desktop/ebpf_study/case/04-go/tc/tc_write.bpf.c",
+  "output": "CMakeFiles/test.dir/case/04-go/tc/tc_write.bpf.c.o"
+},
+{
+  "directory": "/Users/acejilam/Desktop/ebpf_study/build",
+  "command": "/usr/local/opt/llvm/bin/clang -I/media/psf/ebpf_study/include -I/usr/local/src/workspace/include -I/usr/include/aarch64-linux-gnu -g -std=gnu11 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -o CMakeFiles/test.dir/case/04-go/xdp/xdp.bpf.c.o -c /Users/acejilam/Desktop/ebpf_study/case/04-go/xdp/xdp.bpf.c",
+  "file": "/Users/acejilam/Desktop/ebpf_study/case/04-go/xdp/xdp.bpf.c",
+  "output": "CMakeFiles/test.dir/case/04-go/xdp/xdp.bpf.c.o"
+},
+{
+  "directory": "/Users/acejilam/Desktop/ebpf_study/build",
+  "command": "/usr/local/opt/llvm/bin/clang -I/media/psf/ebpf_study/include -I/usr/local/src/workspace/include -I/usr/include/aarch64-linux-gnu -g -std=gnu11 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -o CMakeFiles/test.dir/case/04-go/sys/sys.bpf.c.o -c /Users/acejilam/Desktop/ebpf_study/case/04-go/sys/sys.bpf.c",
+  "file": "/Users/acejilam/Desktop/ebpf_study/case/04-go/sys/sys.bpf.c",
+  "output": "CMakeFiles/test.dir/case/04-go/sys/sys.bpf.c.o"
+},
+{
+  "directory": "/Users/acejilam/Desktop/ebpf_study/build",
+  "command": "/usr/local/opt/llvm/bin/clang -I/media/psf/ebpf_study/include -I/usr/local/src/workspace/include -I/usr/include/aarch64-linux-gnu -g -std=gnu11 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -o CMakeFiles/ebpf_study.dir/main.c.o -c /Users/acejilam/Desktop/ebpf_study/main.c",
+  "file": "/Users/acejilam/Desktop/ebpf_study/main.c",
+  "output": "CMakeFiles/ebpf_study.dir/main.c.o"
+}
+]

@@ -46,3 +46,39 @@ ip -> mac地址    封装在了以太网报文里
 arping -I etho0 192.168.0.3
 
 arp 欺骗，metallb
+
+
+
+- bpf_map_lookup_elem
+- bpf_map_update_elem
+- bpf_map_delete_elem
+
+- bpf_probe_read
+- bpf_get_current_pid_tgid
+
+
+
+```
+struct bpf_map_def SEC("maps") kprobe_map = {
+	.type        = BPF_MAP_TYPE_PERCPU_ARRAY, // BPF_MAP_TYPE_ARRAY,BPF_MAP_TYPE_PERF_EVENT_ARRAY
+	.key_size    = sizeof(u32),
+	.value_size  = sizeof(u64),
+	.max_entries = 1,
+};
+
+
+
+
+```
+
+
+- BPF_SOCK_OPS_ACTIVE_ESTABLISHED_CB    如果客户端发起连接请求并完成三次握手后的操作符
+- BPF_SOCK_OPS_TCP_LISTEN_CB            套接字进入监听状态时的操作符
+- BPF_SOCK_OPS_DATA_ACK_CB              数据被确认
+- BPF_SOCK_OPS_STATE_CB                 TCP 状态改变
+
+
+- BPF_SOCK_OPS_RTT_CB_FLAG
+- BPF_SOCK_OPS_STATE_CB_FLAG
+
+
