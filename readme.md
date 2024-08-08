@@ -10,9 +10,11 @@ root@ubuntu-linux-22-04-desktop:~# cat /sys/kernel/debug/tracing/available_filte
 
 
 
-包含了系统运行 linux 内核源代码中使用的所有类型的定义， bpf 的可能没有
+4.1 摆脱内核头文件依赖
+内核 BTF 信息除了用来做字段重定位之外，还可以用来生成一个大的头文件（"vmlinux.h"），
+这个头文件中**包含了所有的内部内核类型，从而避免了依赖系统层面的内核头文件**。
 bpftool btf dump file /sys/kernel/btf/vmlinux format c > include/vmlinux.h
-
+<!--  只需要 #include "vmlinux.h"，**也不用再安装 kernel-devel -->
 
 ```
 - uprobe            挂载在函数进入之前,可以获取到函数的参数值
@@ -53,7 +55,8 @@ arp 欺骗，metallb
 - bpf_map_update_elem
 - bpf_map_delete_elem
 
-- bpf_probe_read
+- bpf_probe_read  # 如果使用的内核版本还没支持 BPF_PROG_TYPE_TRACING，就必须显式地使用 bpf_probe_read()来读取字段。
+- bpf_core_read   # 新的
 - bpf_get_current_pid_tgid
 
 
@@ -82,3 +85,48 @@ struct bpf_map_def SEC("maps") kprobe_map = {
 - BPF_SOCK_OPS_STATE_CB_FLAG
 
 
+
+
+# 4.3 处理内核版本和配置差异
+
+- https://mp.weixin.qq.com/s?__biz=MzU1MzY4NzQ1OA==&mid=2247493547&idx=1&sn=ab88985daf42faff62f91f2bdb120672&chksm=fbeda766cc9a2e70e503173116ecb1994f26589a82dda5f1b1dbda138725e54470281daef04d&scene=58&subscene=0#rd
+- ```
+    extern u32 LINUX_KERNEL_VERSION __kconfig;
+    extern u32 CONFIG_HZ __kconfig;
+
+    u64 utime_ns;
+
+    if (LINUX_KERNEL_VERSION >= KERNEL_VERSION(4, 11, 0))
+        utime_ns = BPF_CORE_READ(task, utime);
+    else
+        /* convert jiffies to nanoseconds */
+        utime_ns = BPF_CORE_READ(task, utime) * (1000000000UL / CONFIG_HZ);
+
+```
+- ```
+/* up-to-date thread_struct definition matching newer kernels */
+struct thread_struct {
+    ...
+    u64 fsbase;
+    ...
+};
+
+/* legacy thread_struct definition for <= 4.6 kernels */
+struct thread_struct___v46 {   /* ___v46 is a "flavor" part */
+    ...
+    u64 fs;
+    ...
+};
+
+extern
+int LINUX_KERNEL_VERSION __kconfig;
+...
+
+struct thread_struct *thr = ...;
+u64 fsbase;
+if (LINUX_KERNEL_VERSION > KERNEL_VERSION(4, 6, 0))
+    fsbase = BPF_CORE_READ((struct thread_struct___v46 *)thr, fs);
+else
+    fsbase = BPF_CORE_READ(thr, fsbase);
+
+```

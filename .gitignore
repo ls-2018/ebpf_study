@@ -83,3 +83,4 @@ fabric.properties
 ./case/**/test.skel.json
 .DS_Store
 vendor
+build 
