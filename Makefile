@@ -19,10 +19,10 @@ endif
 all: generate
 
 clean:
-	find ./examples -name "*.json" |xargs -I F rm -rf F
-	find ./examples -name "*.o" |xargs -I F rm -rf F
-	find ./examples -name "*bpfeb.go" |xargs -I F rm -rf F
-	find ./examples -name "*bpfel.go" |xargs -I F rm -rf F
+	find . -name "*.json" |xargs -I F rm -rf F
+	find . -name "*.o" |xargs -I F rm -rf F
+	find . -name "*bpfeb.go" |xargs -I F rm -rf F
+	find . -name "*bpfel.go" |xargs -I F rm -rf F
 
 
 generate: export BPF_CFLAGS=$(CFLAGS)
@@ -30,4 +30,8 @@ generate: export ASM_HEADERS=$(OTHERS_HEADERS)
 generate: export BPF_HEADERS=$(CURRENT_DIR)/include
 generate:
 	#ln -sf /usr/include/asm-generic/ /usr/include/asm
-	go generate ./...
+	echo $(BPF_HEADERS)
+	bash ./resources/compile.sh
+
+build:
+	docker run --rm -it -v `pwd`:/data -w /data registry.cn-hangzhou.aliyuncs.com/acejilam/mygo:v1.22.2 make generate

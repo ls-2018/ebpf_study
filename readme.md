@@ -59,6 +59,12 @@ arp 欺骗，metallb
 - bpf_core_read   # 新的
 - bpf_get_current_pid_tgid
 
+- bpf_get_smp_processor_id
+- bpf_get_numa_node_id # cat /boot/config-$(uname -r) | grep CONFIG_USE_PERCPU_NUMA_NODE_ID
+
+- bpf_tail_call_static
+- bpf_skc_lookup_tcp
+
 
 
 ```
@@ -130,3 +136,14 @@ else
     fsbase = BPF_CORE_READ(thr, fsbase);
 
 ```
+
+
+- BPF_PROG_TYPE_SK_REUSEPORT
+- BPF_MAP_TYPE_REUSEPORT_SOCKARRAY
+
+
+
+
+
+-- kprobe 可以跟踪的值 cat /sys/kernel/debug/tracing/available_filter_functions|grep dev_xdp_attach
+-- 自定义内核函数 /sys/kernel/btf 一级文件、非vmlinux
